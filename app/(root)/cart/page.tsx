@@ -84,7 +84,12 @@ const Cart = () => {
 
                   <div className="w-full flex items-center  justify-evenly">
 
-                    <Textarea onChange={() => { }} className="h-10 w-80 border border-black" />
+                    <Textarea
+                      value={cartItem.description || ""}
+                      placeholder="Enter description"
+                      className="h-10 w-80 border border-black"
+                      onChange={(e) => cart.updateItemDescription(cartItem.item._id, e.target.value)}
+                    />
                     <div className="flex gap-4 items-center">
                       <MinusCircle
                         className="hover:text-red-1 cursor-pointer"
