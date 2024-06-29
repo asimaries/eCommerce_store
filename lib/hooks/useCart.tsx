@@ -7,6 +7,8 @@ interface CartItem {
   quantity: number;
   color?: string; // ? means optional
   size?: string; // ? means optional
+  images ?: string[];
+  description?: string;
 }
 
 interface CartStore {
@@ -15,6 +17,7 @@ interface CartStore {
   removeItem: (idToRemove: string) => void;
   increaseQuantity: (idToIncrease: string) => void;
   decreaseQuantity: (idToDecrease: string) => void;
+  updateItemImages: (id: string, images: string[]) => void;
   clearCart: () => void;
 }
 
@@ -60,6 +63,16 @@ const useCart = create(
         );
         set({ cartItems: newCartItems });
         toast.success("Item quantity decreased");
+      },
+      updateItemImages: (id: string, images: string[]) => {
+        const newCartItems = get().cartItems.map((cartItem) =>
+          cartItem.item._id === id
+            ? { ...cartItem, images }
+            : cartItem
+        );
+        set({ cartItems: newCartItems });
+        toast.success("Item images updated");
+        console.log(newCartItems)
       },
       clearCart: () => set({ cartItems: [] }),
     }),

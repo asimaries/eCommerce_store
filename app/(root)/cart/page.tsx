@@ -1,5 +1,7 @@
 "use client";
 
+import ImageUpload from "@/components/ImageUpload";
+import { Textarea } from "@/components/ui/textarea";
 import useCart from "@/lib/hooks/useCart";
 
 import { useUser } from "@clerk/nextjs";
@@ -34,8 +36,9 @@ const Cart = () => {
           body: JSON.stringify({ cartItems: cart.cartItems, customer }),
         });
         const data = await res.json();
-        window.location.href = data.url;
-        console.log(data);
+        // window.location.href = data.url;
+        // console.log(data);
+        router.push('payment_success')
       }
     } catch (err) {
       console.log("[checkout_POST]", err);
@@ -53,7 +56,7 @@ const Cart = () => {
         ) : (
           <div>
             {cart.cartItems.map((cartItem) => (
-              <div className="w-full flex max-sm:flex-col max-sm:gap-3 hover:bg-grey-1 px-4 py-3 items-center max-sm:items-start justify-between">
+              <div className="w-full flex max-sm:flex-col max-sm:gap-3 hover:bg-slate-100 px-4 py-3 items-center max-sm:items-start bg-slate-50 justify-between ">
                 <div className="flex items-center">
                   <Image
                     src={cartItem.item.media[0]}
@@ -73,23 +76,32 @@ const Cart = () => {
                     <p className="text-small-medium">${cartItem.item.price}</p>
                   </div>
                 </div>
+                <div className="w-full">
+                  <ImageUpload
+                    itemId={cartItem.item._id}
+                    value={cartItem.images}
+                  />
 
-                <div className="flex gap-4 items-center">
-                  <MinusCircle
-                    className="hover:text-red-1 cursor-pointer"
-                    onClick={() => cart.decreaseQuantity(cartItem.item._id)}
-                  />
-                  <p className="text-body-bold">{cartItem.quantity}</p>
-                  <PlusCircle
-                    className="hover:text-red-1 cursor-pointer"
-                    onClick={() => cart.increaseQuantity(cartItem.item._id)}
-                  />
+                  <div className="w-full flex items-center  justify-evenly">
+
+                    <Textarea onChange={() => { }} className="h-10 w-80 border border-black" />
+                    <div className="flex gap-4 items-center">
+                      <MinusCircle
+                        className="hover:text-red-1 cursor-pointer"
+                        onClick={() => cart.decreaseQuantity(cartItem.item._id)}
+                      />
+                      <p className="text-body-bold">{cartItem.quantity}</p>
+                      <PlusCircle
+                        className="hover:text-red-1 cursor-pointer"
+                        onClick={() => cart.increaseQuantity(cartItem.item._id)}
+                      />
+                    </div>
+                    <Trash
+                      className="hover:text-red-1 cursor-pointer"
+                      onClick={() => cart.removeItem(cartItem.item._id)}
+                    />
+                  </div>
                 </div>
-
-                <Trash
-                  className="hover:text-red-1 cursor-pointer"
-                  onClick={() => cart.removeItem(cartItem.item._id)}
-                />
               </div>
             ))}
           </div>
@@ -99,9 +111,8 @@ const Cart = () => {
       <div className="w-1/3 max-lg:w-full flex flex-col gap-8 bg-grey-1 rounded-lg px-4 py-5">
         <p className="text-heading4-bold pb-4">
           Summary{" "}
-          <span>{`(${cart.cartItems.length} ${
-            cart.cartItems.length > 1 ? "items" : "item"
-          })`}</span>
+          <span>{`(${cart.cartItems.length} ${cart.cartItems.length > 1 ? "items" : "item"
+            })`}</span>
         </p>
         <div className="flex justify-between text-body-semibold">
           <span>Total Amount</span>
