@@ -1,6 +1,9 @@
 import ProductCard from '@/components/ProductCard'
 import { getSearchedProducts } from '@/lib/actions/actions'
 
+export const runtime = 'edge'
+
+
 const SearchPage = async ({ params }: { params: { query: string }}) => {
   const searchedProducts = await getSearchedProducts(params.query)
 

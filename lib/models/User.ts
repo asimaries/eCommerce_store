@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+export const runtime = 'edge'
 
 const userSchema = new mongoose.Schema({
   clerkId: String,

@@ -2,14 +2,15 @@ import Collections from "@/components/Collections";
 import ProductList from "@/components/ProductList";
 
 import Image from "next/image";
+export const runtime = 'edge'
 
 export default function Home() {
   return (
     <>
-      <Image src="/banner.png" alt="banner" width={200} height={200} className="w-screen" />
+      <Image src="/banner.png" alt="banner" width={2000} height={2000} className="w-screen" />
       <Collections />
       <ProductList />
-      
+
     </>
   );
 }

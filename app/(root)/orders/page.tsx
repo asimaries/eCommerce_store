@@ -2,6 +2,7 @@ import { getOrders } from "@/lib/actions/actions";
 
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
+export const runtime = 'edge'
 
 const Orders = async () => {
   const { userId } = auth();

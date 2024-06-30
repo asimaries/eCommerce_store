@@ -3,6 +3,8 @@ import { getCollectionDetails } from "@/lib/actions/actions";
 import Image from "next/image";
 import React from "react";
 
+export const runtime = 'edge'
+
 const CollectionDetails = async ({
   params,
 }: {
